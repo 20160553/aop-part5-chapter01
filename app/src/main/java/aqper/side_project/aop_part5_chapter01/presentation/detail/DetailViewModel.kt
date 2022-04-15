@@ -3,6 +3,7 @@ package aqper.side_project.aop_part5_chapter01.presentation.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import aqper.side_project.aop_part5_chapter01.domain.todo.DeleteToDoItemUseCase
 import aqper.side_project.aop_part5_chapter01.domain.todo.GetToDoItemUseCase
 import aqper.side_project.aop_part5_chapter01.presentation.BaseViewModel
 import kotlinx.coroutines.Job
@@ -11,7 +12,8 @@ import kotlinx.coroutines.launch
 internal class DetailViewModel(
     var detailMode: DetailMode,
     var id: Long = -1,
-    private val getToDoItemUseCase: GetToDoItemUseCase
+    private val getToDoItemUseCase: GetToDoItemUseCase,
+    private val deleteToDoItemUseCase: DeleteToDoItemUseCase
 ): BaseViewModel() {
 
     private var _toDoDetailLiveData = MutableLiveData<ToDoDetailState>(ToDoDetailState.UnInitialized)
@@ -35,6 +37,21 @@ internal class DetailViewModel(
                     _toDoDetailLiveData.postValue(ToDoDetailState.Error)
                 }
             }
+        }
+    }
+
+    fun deleteToDo() = viewModelScope.launch {
+        _toDoDetailLiveData.postValue(ToDoDetailState.Loading)
+
+        try {
+            if (deleteToDoItemUseCase(id)) {
+                _toDoDetailLiveData.postValue(ToDoDetailState.Delete)
+            } else {
+                _toDoDetailLiveData.postValue(ToDoDetailState.Error)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _toDoDetailLiveData.postValue(ToDoDetailState.Error )
         }
     }
 

@@ -5,6 +5,8 @@ import aqper.side_project.aop_part5_chapter01.domain.todo.InsertToDoItemUseCase
 import aqper.side_project.aop_part5_chapter01.presentation.detail.DetailMode
 import aqper.side_project.aop_part5_chapter01.presentation.detail.DetailViewModel
 import aqper.side_project.aop_part5_chapter01.presentation.detail.ToDoDetailState
+import aqper.side_project.aop_part5_chapter01.presentation.list.ListViewModel
+import aqper.side_project.aop_part5_chapter01.presentation.list.ToDoListState
 import aqper.side_project.aop_part5_chapter01.viewmodel.ViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -28,6 +30,8 @@ internal class DetailViewModelTest: ViewModelTest() {
     private val id = 1L
 
     private val detailViewModel by inject<DetailViewModel> { parametersOf(DetailMode.DETAIL, id) }
+    private val listViewModel by inject<ListViewModel>()
+
     private val insertToDoItemUseCase: InsertToDoItemUseCase by inject()
 
     private val todo = ToDoEntity(
@@ -60,5 +64,28 @@ internal class DetailViewModelTest: ViewModelTest() {
         )
     }
 
+    @Test
+    fun `test delete todo`() = runBlockingTest {
+        val detailTestObservable = detailViewModel.toDoDetailLiveData.test()
+        detailViewModel.deleteToDo()
+
+        detailTestObservable.assertValueSequence(
+            listOf(
+                ToDoDetailState.UnInitialized,
+                ToDoDetailState.Loading,
+                ToDoDetailState.Delete
+            )
+        )
+        val listTestObservable = listViewModel.toDoListLiveData .test()
+        listViewModel.fetchData()
+        listTestObservable.assertValueSequence(
+            listOf(
+                ToDoListState.UnInitialized,
+                ToDoListState.Loading,
+                ToDoListState.Success(listOf())
+            )
+        )
+
+    }
 
 }
