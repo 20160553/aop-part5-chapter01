@@ -1,11 +1,13 @@
 package aqper.side_project.aop_part5_chapter01.viewmodel
 
 import android.app.Application
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import aqper.side_project.aop_part5_chapter01.di.appTestModule
 import aqper.side_project.aop_part5_chapter01.livedata.LiveDataTestObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -21,8 +23,10 @@ import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
 @ExperimentalCoroutinesApi
-internal class ViewModelTest: KoinTest {
+internal abstract class ViewModelTest: KoinTest {
     @get: Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
@@ -48,6 +52,7 @@ internal class ViewModelTest: KoinTest {
     protected fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
         val testObserver = LiveDataTestObserver<T>()
         observeForever(testObserver)
+
         return testObserver
     }
 }

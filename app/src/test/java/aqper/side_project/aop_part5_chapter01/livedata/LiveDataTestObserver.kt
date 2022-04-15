@@ -21,6 +21,7 @@ class LiveDataTestObserver<T> : Observer<T> {
             actualNext = actualIterator.hasNext()
             expectedNext = expectedIterator.hasNext()
 
+
             if (!actualNext || !expectedNext) break
 
             val actual: T = actualIterator.next()
@@ -32,12 +33,14 @@ class LiveDataTestObserver<T> : Observer<T> {
 
             i++
         }
+
         if (actualNext) {
             throw AssertionError("More values received than expected ($i)")
         }
         if (expectedNext) {
-            throw AssertionError("More values received than expected ($i)")
+            throw AssertionError("Fewer values received than expected ($i)")
         }
+
         return this
     }
 }
