@@ -4,7 +4,7 @@ import aqper.side_project.aop_part5_chapter01.data.entity.ToDoEntity
 import aqper.side_project.aop_part5_chapter01.data.repository.ToDoRepository
 import aqper.side_project.aop_part5_chapter01.domain.UseCase
 
-class UpdateToDoListUseCase(
+class UpdateToDoUseCase(
     private val toDoRepository: ToDoRepository
 ): UseCase {
 

@@ -85,7 +85,30 @@ internal class DetailViewModelTest: ViewModelTest() {
                 ToDoListState.Success(listOf())
             )
         )
+    }
 
+    @Test
+    fun `test update todo`() = runBlockingTest {
+        val testObservable = detailViewModel.toDoDetailLiveData.test()
+        val updateTitle = "title 1 update"
+        val updateDescription = "description 1 update"
+
+        val updateToDo = todo.copy(
+            title = updateTitle,
+            description = updateDescription
+        )
+        detailViewModel.writeToDo(
+            title = updateTitle,
+            description = updateDescription
+        )
+
+        testObservable.assertValueSequence(
+            listOf(
+                ToDoDetailState.UnInitialized,
+                ToDoDetailState.Loading,
+                ToDoDetailState.Success(updateToDo)
+            )
+        )
     }
 
 }

@@ -18,6 +18,7 @@ internal val appTestModule = module {
             detailMode = detailMode,
             id = id,
             get(),
+            get(),
             get()
         )
     }
@@ -26,7 +27,7 @@ internal val appTestModule = module {
     factory { GetToDoListUseCase(get())}
     factory { InsertToDoItemUseCase(get()) }
     factory { InsertToDoListUseCase(get()) }
-    factory { UpdateToDoListUseCase(get()) }
+    factory { UpdateToDoUseCase(get()) }
     factory { GetToDoItemUseCase(get()) }
     factory { DeleteAllToDoItemUseCase(get())}
     factory { DeleteToDoItemUseCase(get())}

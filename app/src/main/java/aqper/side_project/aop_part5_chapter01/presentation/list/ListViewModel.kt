@@ -2,12 +2,11 @@ package aqper.side_project.aop_part5_chapter01.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import aqper.side_project.aop_part5_chapter01.data.entity.ToDoEntity
 import aqper.side_project.aop_part5_chapter01.domain.todo.DeleteAllToDoItemUseCase
 import aqper.side_project.aop_part5_chapter01.domain.todo.GetToDoListUseCase
-import aqper.side_project.aop_part5_chapter01.domain.todo.UpdateToDoListUseCase
+import aqper.side_project.aop_part5_chapter01.domain.todo.UpdateToDoUseCase
 import aqper.side_project.aop_part5_chapter01.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
  */
 internal class ListViewModel(
     private val getToDoListUseCase: GetToDoListUseCase,
-    private val updateToDoListUseCase: UpdateToDoListUseCase,
+    private val updateToDoListUseCase: UpdateToDoUseCase,
     private val deleteAllToDoItemUseCase: DeleteAllToDoItemUseCase
 ): BaseViewModel() {
 
