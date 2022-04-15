@@ -10,7 +10,7 @@ import aqper.side_project.aop_part5_chapter01.data.entity.ToDoEntity
 interface ToDoRepository {
 
     suspend fun getToDoList(): List<ToDoEntity>
-    suspend fun insertToDoItem(toDoItem: ToDoEntity)
+    suspend fun insertToDoItem(toDoItem: ToDoEntity): Long
     suspend fun insertToDoList(toDoList: List<ToDoEntity>)
     suspend fun updateToDo(toDoEntity: ToDoEntity): Boolean
     suspend fun getToDoItem(itemId: Long): ToDoEntity?
