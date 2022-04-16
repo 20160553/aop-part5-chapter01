@@ -29,7 +29,6 @@ class DefaultToDoRepository(
         toDoDao.update(toDoEntity)
     }
 
-
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         toDoDao.deleteAll()
     }

@@ -1,9 +1,12 @@
 package aqper.side_project.aop_part5_chapter01.presentation.list
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
+import aqper.side_project.aop_part5_chapter01.R
 import aqper.side_project.aop_part5_chapter01.databinding.ActivityListBinding
 import aqper.side_project.aop_part5_chapter01.presentation.BaseActivity
 import aqper.side_project.aop_part5_chapter01.presentation.view.ToDoAdapter
@@ -96,6 +99,23 @@ internal class ListActivity : BaseActivity<ListViewModel>(), CoroutineScope {
 
     private fun handleErrorState() {
         Toast.makeText(this, "에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete_all -> {
+                viewModel.deleteAll()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.list_menu, menu)
+        return true
     }
 
 }
