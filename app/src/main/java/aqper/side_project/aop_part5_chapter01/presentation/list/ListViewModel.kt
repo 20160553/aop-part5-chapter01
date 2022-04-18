@@ -33,16 +33,16 @@ internal class ListViewModel(
 
     override fun fetchData(): Job = viewModelScope.launch {
         _toDoListLiveData.postValue(ToDoListState.Loading)
-        insertToDoListUseCase(
-            (0 until 10).map {
-                ToDoEntity(
-                    id = it.toLong(),
-                    title = "title $it",
-                    description = "description $it",
-                    hasCompleted = false
-                )
-            }
-        )
+//        insertToDoListUseCase(
+//            (0 until 10).map {
+//                ToDoEntity(
+//                    id = it.toLong(),
+//                    title = "title $it",
+//                    description = "description $it",
+//                    hasCompleted = false
+//                )
+//            }
+//        )
         _toDoListLiveData.postValue(ToDoListState.Success(getToDoListUseCase()))
     }
 
